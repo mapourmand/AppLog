@@ -6,6 +6,8 @@ function sendToInflux(req, res) {
         var request = require('request');
         var db = req.query.db; //('db');   
         var log = req.query.log; //.replace("'","");
+        var action = req.query.action;
+        log = log.replace(",", ",ad_action=\""+action+"\",");
         console.log(log);
         request({
             url: 'http://95.156.255.226:8086/write?db='+db,
