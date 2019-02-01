@@ -41,9 +41,11 @@ function submitError(req, res) {
     var address = forwarded(req, req.headers);
 
     try {
-    var body = req.body.account+',ip='+address.ip+',body='+req.body.body.replace(" ","_")+",responce="+req.body.responce.replace(" ","_")+" "+(new Date());
+    var body = req.body.account+',ip="'+address.ip+'",body="'+req.body.body.replace(" ","_")+'" responce="'+req.body.responce.replace(" ","_")+'" '+(new Date().getTime());
+    console.log(body);
+
         var request = require('request');
-        console.log(log);
+        console.log("1");
         request({
             url: 'http://95.156.255.226:8086/write?db=errorlog',
             method: 'post',
