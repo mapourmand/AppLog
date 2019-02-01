@@ -10,7 +10,7 @@ function sendToInflux(req, res) {
         log = log.replace(",", ",ad_action=\""+action+"\",");
         console.log(log);
         request({
-            url: 'http://95.156.255.226:8443/write?db='+db,
+            url: 'http://95.156.255.226:8080/write?db='+db,
             method: 'post',
             body: log,
             header: {'Content-Type': 'text/plain'},
@@ -47,7 +47,7 @@ function submitError(req, res) {
         var request = require('request');
         console.log("1");
         request({
-            url: 'http://95.156.255.226:8443/write?db=errorlog',
+            url: 'http://95.156.255.226:8080/write?db=errorlog',
             method: 'post',
             body: body,
             header: {'Content-Type': 'text/plain'},
