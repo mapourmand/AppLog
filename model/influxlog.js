@@ -70,4 +70,29 @@ function submitError(req, res) {
         res.status(404).json(err);
     }
 }
-module.exports = { sendToInflux, submitError }
+
+function decrypt(req, res) {
+
+    var aesjs = require('aes-js');
+
+    try {
+        var key = [60, 10, 1, 40, 20, 40, 8, 40, 4, 40, 8, 40, 6, 4, 4, 4];
+        var  encrypted = req.body.msg;
+        var  decrypted = [];
+        for (var i = 0, len = encrypted.length; i < len; i++) {
+            encryptedHex = encrypted[i];
+            var encryptedBytes = aesjs.utils.hex.toBytes(encryptedHex);
+            var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
+            var decryptedBytes = aesCtr.decrypt(encryptedBytes);
+            var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
+
+            decrypted.push(decryptedText);
+        }
+        
+        res.status(200).json({"msg" : decrypted});
+    }
+    catch(err) {
+        res.status(400).json("");
+    }
+}
+module.exports = { sendToInflux, submitError, decrypt }
