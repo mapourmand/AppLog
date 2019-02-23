@@ -82,7 +82,7 @@ function decrypt(req, res) {
         for (var i = 0, len = encrypted.length; i < len; i++) {
             encryptedHex = encrypted[i];
             var encryptedBytes = aesjs.utils.hex.toBytes(encryptedHex);
-            var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(5));
+            var aesCtr = new aesjs.ModeOfOperation.ctr(key, new aesjs.Counter(7));
             var decryptedBytes = aesCtr.decrypt(encryptedBytes);
             var decryptedText = aesjs.utils.utf8.fromBytes(decryptedBytes);
 
