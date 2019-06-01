@@ -23,13 +23,25 @@ function sendToInflux(req, res) {
                 res.status(500).json({"msg":error});
             } else {
 //                console.log("Submit Successfully");
+                    request({
+                        url: 'http://5.253.27.241:8086/write?db=test',
+                        method: 'post',
+                        body: log,
+                        header: {'Content-Type': 'text/plain'},
+                        timeout: 600 * 1000
+                    }, function (error, result, body) {
+                        console.log("send to new influx");
+                    });
 
                 res.status(200).json(JSON.stringify(body));
                 return;
             }
         });
+
+        
     }
     catch(err) {
+        console.log(err);
         res.status(404).json(err);
     }
 }
