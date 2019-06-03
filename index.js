@@ -14,6 +14,7 @@ app.use(bodyParser.urlencoded({limit: '200mb', extended: true}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ type: 'application/json' }));
 
+var dataRouter = require('./routes/data');
 
 app.get('/', (req, res) => res.send('Hello Kepler!'))
 
@@ -21,5 +22,7 @@ data = require('./model/influxlog');
 app.get('/log', data.sendToInflux);
 app.post('/error', data.submitError);
 app.post('/decrypt', data.decrypt);
+
+app.use('/data', dataRouter);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
